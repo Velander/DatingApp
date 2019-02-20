@@ -28,6 +28,7 @@ namespace DatingApp.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto)
         {
+            
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
             if (await _repo.UserExists(userForRegisterDto.Username))
                 return BadRequest("Username already exists.");
@@ -48,7 +49,7 @@ namespace DatingApp.API.Controllers
         {
             var userFromnRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
-            if (userForLoginDto == null)
+            if (userFromnRepo == null)
                 return Unauthorized();
 
             var claims = new[]
