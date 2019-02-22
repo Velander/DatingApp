@@ -18,18 +18,17 @@ export class ErrorInterceptor implements HttpInterceptor {
                         console.error(applicationError);
                         return throwError(applicationError);
                     }
-                    
                     const serverError = error.error;
                     let modelStateErrors = '';
-                    if(serverError.errors && typeof serverError.errors === 'object') {
+                    if (serverError.errors && typeof serverError.errors === 'object') {
                         for (const key in serverError.errors) {
-                            if(serverError.errors[key]) {
+                            if (serverError.errors[key]) {
                                 modelStateErrors += serverError.errors[key] + '\n';
                             }
                         }
                     } else if (serverError && typeof serverError === 'object') {
                         for (const key in serverError) {
-                            if(serverError[key]) {
+                            if (serverError[key]) {
                                 modelStateErrors += serverError[key] + '\n';
                             }
                         }
@@ -45,4 +44,4 @@ export const ErrorInterceptorProvider = {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorInterceptor,
     multi: true
-}
+};
